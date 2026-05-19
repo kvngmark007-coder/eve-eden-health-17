@@ -91,7 +91,7 @@ function EveHome() {
         const { data: p } = await supabase
           .from("providers")
           .select("full_name")
-          .eq("user_id", g.reviewed_by)
+          .eq("id", g.reviewed_by)
           .maybeSingle();
         if (!cancelled) setReviewerName(p?.full_name ?? null);
       }
