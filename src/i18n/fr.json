@@ -1,0 +1,105 @@
+{
+  "nav": {
+    "home": "Accueil",
+    "providers": "Médecins",
+    "vendors": "Boutique",
+    "appointments": "Rendez-vous",
+    "community": "Communauté",
+    "ask": "Demander à Eve",
+    "guidance": "Conseils",
+    "profile": "Profil"
+  },
+  "common": {
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "continue": "Continuer",
+    "back": "Retour",
+    "loading": "Chargement…",
+    "skip": "Passer pour l'instant",
+    "yes": "Oui",
+    "no": "Non",
+    "signOut": "Se déconnecter",
+    "signUp": "S'inscrire",
+    "signIn": "Se connecter"
+  },
+  "home": {
+    "greeting_morning": "Bonjour",
+    "greeting_afternoon": "Bon après-midi",
+    "greeting_evening": "Bonsoir",
+    "weekOf": "Semaine {{week}} de votre grossesse",
+    "loadingWeek": "Chargement de votre semaine…",
+    "babySize": "Bébé a la taille d'{{size}}.",
+    "due": "Prévu {{date}}",
+    "todaysGuidance": "Conseil du jour",
+    "guidanceComing": "De nouveaux conseils pour la semaine {{week}} arrivent.",
+    "reviewedBy": "Validé par Dr. {{name}}",
+    "quickActions": "Actions rapides",
+    "findDoctor": "Trouver un médecin",
+    "verifiedProviders": "Praticiens vérifiés",
+    "shopVendors": "Boutiques",
+    "mamaEssentials": "Essentiels maman",
+    "myBookings": "Mes rendez-vous",
+    "upcomingVisits": "Visites à venir",
+    "community": "Communauté",
+    "mothersNearYou": "Mamans près de vous"
+  },
+  "ask": {
+    "title": "Demandez à Eve",
+    "placeholder": "Posez votre question…",
+    "disclaimer": "Eve donne des conseils généraux — cela ne remplace pas un avis médical. En cas de symptômes urgents, contactez votre médecin."
+  },
+  "trimester": {
+    "first": "Premier trimestre",
+    "second": "Deuxième trimestre",
+    "third": "Troisième trimestre"
+  },
+  "appt": {
+    "title": "Rendez-vous",
+    "status": {
+      "confirmed": "Confirmé",
+      "pending": "En attente",
+      "completed": "Terminé",
+      "cancelled": "Annulé"
+    },
+    "empty": "Aucun rendez-vous à venir."
+  },
+  "onboarding": {
+    "welcome": "Bienvenue sur Eve",
+    "tagline": "Votre compagnon de grossesse, dans la langue que vous pensez.",
+    "tellUs": "Parlez-nous de votre grossesse",
+    "dueDate": "Date prévue",
+    "pickDueDate": "Choisissez votre date prévue",
+    "weeksAlong": "Vous êtes à {{week}} semaines",
+    "firstPregnancy": "Est-ce votre première grossesse ?",
+    "city": "Ville",
+    "free": "Eve est gratuite pour vous. Toujours.",
+    "helpEve": "Aidez Eve à mieux vous comprendre",
+    "diet": "Préférence alimentaire",
+    "culture": "Contexte culturel",
+    "whatsappTitle": "Rappels WhatsApp",
+    "whatsappBody": "Nous vous enverrons des rappels par WhatsApp. Vous pouvez arrêter à tout moment.",
+    "haveOb": "Avez-vous déjà un gynécologue ?",
+    "searchPlaceholder": "Rechercher par nom ou clinique",
+    "noVerified": "Aucun praticien vérifié trouvé.",
+    "select": "Choisir",
+    "selected": "Choisi",
+    "ready": "Vous êtes prête",
+    "guideEvery": "Eve vous accompagnera chaque semaine de votre grossesse."
+  },
+  "form": {
+    "required": "Requis",
+    "invalidEmail": "Saisissez un email valide",
+    "minPassword": "Le mot de passe doit contenir au moins 6 caractères"
+  },
+  "empty": {
+    "noResults": "Aucun résultat trouvé.",
+    "noProviders": "Aucun praticien vérifié à proximité."
+  },
+  "language": {
+    "label": "Langue",
+    "fr": "Français",
+    "ar": "العربية",
+    "en": "English",
+    "ber": "Tamazight"
+  }
+}

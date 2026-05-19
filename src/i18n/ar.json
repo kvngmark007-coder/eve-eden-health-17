@@ -1,0 +1,105 @@
+{
+  "nav": {
+    "home": "الرئيسية",
+    "providers": "الأطباء",
+    "vendors": "المتجر",
+    "appointments": "المواعيد",
+    "community": "المجتمع",
+    "ask": "اسألي إيف",
+    "guidance": "إرشادات",
+    "profile": "الملف الشخصي"
+  },
+  "common": {
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "continue": "متابعة",
+    "back": "رجوع",
+    "loading": "جارٍ التحميل…",
+    "skip": "تخطي الآن",
+    "yes": "نعم",
+    "no": "لا",
+    "signOut": "تسجيل الخروج",
+    "signUp": "إنشاء حساب",
+    "signIn": "تسجيل الدخول"
+  },
+  "home": {
+    "greeting_morning": "صباح الخير",
+    "greeting_afternoon": "مساء الخير",
+    "greeting_evening": "مساء الخير",
+    "weekOf": "الأسبوع {{week}} من حملك",
+    "loadingWeek": "جارٍ تحميل أسبوعك…",
+    "babySize": "حجم الطفل تقريبًا بحجم {{size}}.",
+    "due": "موعد الولادة {{date}}",
+    "todaysGuidance": "إرشاد اليوم",
+    "guidanceComing": "إرشادات جديدة للأسبوع {{week}} قادمة.",
+    "reviewedBy": "تمت المراجعة من قبل د. {{name}}",
+    "quickActions": "إجراءات سريعة",
+    "findDoctor": "ابحثي عن طبيب",
+    "verifiedProviders": "أطباء موثوقون",
+    "shopVendors": "المتاجر",
+    "mamaEssentials": "أساسيات الأم",
+    "myBookings": "مواعيدي",
+    "upcomingVisits": "الزيارات القادمة",
+    "community": "المجتمع",
+    "mothersNearYou": "أمهات بالقرب منك"
+  },
+  "ask": {
+    "title": "اسألي إيف أي شيء",
+    "placeholder": "اكتبي سؤالك…",
+    "disclaimer": "تقدّم إيف إرشادات عامة — وليست بديلاً عن الاستشارة الطبية. في حالة الأعراض الطارئة، تواصلي مع طبيبك."
+  },
+  "trimester": {
+    "first": "الثلث الأول",
+    "second": "الثلث الثاني",
+    "third": "الثلث الثالث"
+  },
+  "appt": {
+    "title": "المواعيد",
+    "status": {
+      "confirmed": "مؤكد",
+      "pending": "قيد الانتظار",
+      "completed": "مكتمل",
+      "cancelled": "ملغى"
+    },
+    "empty": "لا توجد مواعيد قادمة."
+  },
+  "onboarding": {
+    "welcome": "مرحبًا بك في إيف",
+    "tagline": "رفيقتك خلال الحمل، باللغة التي تفكرين بها.",
+    "tellUs": "أخبرينا عن حملك",
+    "dueDate": "تاريخ الولادة المتوقع",
+    "pickDueDate": "اختاري تاريخ الولادة",
+    "weeksAlong": "أنت في الأسبوع {{week}}",
+    "firstPregnancy": "هل هذا حملك الأول؟",
+    "city": "المدينة",
+    "free": "إيف مجانية لك. دائمًا.",
+    "helpEve": "ساعدي إيف على فهمك بشكل أفضل",
+    "diet": "التفضيل الغذائي",
+    "culture": "السياق الثقافي",
+    "whatsappTitle": "تذكيرات واتساب",
+    "whatsappBody": "سنرسل تذكيرات الرعاية عبر واتساب. يمكنك إيقافها في أي وقت.",
+    "haveOb": "هل لديك طبيب نسائية بالفعل؟",
+    "searchPlaceholder": "ابحثي بالاسم أو العيادة",
+    "noVerified": "لم يتم العثور على أطباء موثوقين.",
+    "select": "اختيار",
+    "selected": "تم الاختيار",
+    "ready": "أنت جاهزة",
+    "guideEvery": "ستوجهك إيف خلال كل أسبوع من حملك."
+  },
+  "form": {
+    "required": "مطلوب",
+    "invalidEmail": "أدخلي بريدًا إلكترونيًا صالحًا",
+    "minPassword": "يجب أن يحتوي كلمة المرور على 6 أحرف على الأقل"
+  },
+  "empty": {
+    "noResults": "لا توجد نتائج.",
+    "noProviders": "لا يوجد أطباء موثوقون بالقرب."
+  },
+  "language": {
+    "label": "اللغة",
+    "fr": "Français",
+    "ar": "العربية",
+    "en": "English",
+    "ber": "Tamazight"
+  }
+}

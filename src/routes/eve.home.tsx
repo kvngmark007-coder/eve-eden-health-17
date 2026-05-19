@@ -10,18 +10,14 @@ import {
   Users,
   ChevronDown,
 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { EveShell } from "@/components/shells/EveShell";
 import { StageRing } from "@/components/ui/StageRing";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { AICard } from "@/components/ui/AICard";
 import { GuidanceCard } from "@/components/ui/GuidanceCard";
 import { supabase } from "@/integrations/supabase/client";
-import {
-  babySizeFor,
-  trimesterFor,
-  greetingFor,
-  askSuggestionFor,
-} from "@/lib/babySize";
+import { babySizeFor } from "@/lib/babySize";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/eve/home")({
@@ -44,6 +40,7 @@ type Guidance = {
 };
 
 function EveHome() {
+  const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
   const [mother, setMother] = useState<Mother | null>(null);
   const [guidance, setGuidance] = useState<Guidance | null>(null);
@@ -69,15 +66,23 @@ function EveHome() {
 
       const week = m?.pregnancy_week ?? 1;
       const language = m?.language ?? "fr";
-      const { data: g } = await supabase
-        .from("guidance_content")
-        .select("id, title, body, reviewed_by")
-        .eq("is_published", true)
-        .eq("language", language)
-        .lte("week_min", week)
-        .gte("week_max", week)
-        .limit(1)
-        .maybeSingle();
+
+      async function fetchGuidance(lang: string) {
+        return supabase
+          .from("guidance_content")
+          .select("id, title, body, reviewed_by")
+          .eq("is_published", true)
+          .eq("language", lang)
+          .lte("week_min", week)
+          .gte("week_max", week)
+          .limit(1)
+          .maybeSingle();
+      }
+
+      let { data: g } = await fetchGuidance(language);
+      if (!g && language !== "fr") {
+        ({ data: g } = await fetchGuidance("fr"));
+      }
       if (cancelled) return;
       setGuidance(g as Guidance | null);
 
@@ -96,9 +101,15 @@ function EveHome() {
     };
   }, []);
 
-  const firstName = (mother?.full_name ?? "").split(" ")[0] || "there";
+  const firstName = (mother?.full_name ?? "").split(" ")[0] || "";
   const week = mother?.pregnancy_week ?? 1;
-  const greeting = greetingFor(mother?.language);
+  const hour = new Date().getHours();
+  const greeting =
+    hour < 12
+      ? t("home.greeting_morning")
+      : hour < 18
+        ? t("home.greeting_afternoon")
+        : t("home.greeting_evening");
   const progressPct = Math.min(100, Math.round((week / 40) * 100));
   const dueDate = mother?.due_date
     ? new Date(mother.due_date).toLocaleDateString(undefined, {
@@ -108,18 +119,22 @@ function EveHome() {
       })
     : null;
 
+  const trimesterKey =
+    week <= 13 ? "first" : week <= 27 ? "second" : "third";
+
   return (
     <EveShell>
       {/* Greeting */}
-      <div className="px-3">
+      <div className="px-3 rtl:text-right">
         <SectionLabel>
-          {greeting}, {firstName} —
+          {greeting}
+          {firstName ? `, ${firstName}` : ""} —
         </SectionLabel>
         <h1
           className="mt-1 font-serif text-eve-forest"
           style={{ fontSize: "22px" }}
         >
-          {loading ? "Loading your week…" : `Week ${week} of your pregnancy`}
+          {loading ? t("home.loadingWeek") : t("home.weekOf", { week })}
         </h1>
       </div>
 
@@ -129,22 +144,22 @@ function EveHome() {
           <SkeletonBlock className="h-32" />
         ) : (
           <div className="rounded-2xl border border-eve-teal/20 bg-white p-4">
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4 rtl:flex-row-reverse">
               <StageRing week={week} size={58} />
-              <div className="min-w-0 flex-1">
-                <SectionLabel>{trimesterFor(week)}</SectionLabel>
+              <div className="min-w-0 flex-1 rtl:text-right">
+                <SectionLabel>{t(`trimester.${trimesterKey}`)}</SectionLabel>
                 <p
                   className="mt-1 font-sans text-eve-teal-dark"
                   style={{ fontSize: "12px" }}
                 >
-                  Baby is about the size of {babySizeFor(week)}.
+                  {t("home.babySize", { size: babySizeFor(week) })}
                 </p>
                 {dueDate && (
                   <p
                     className="mt-1 font-sans text-eve-muted"
                     style={{ fontSize: "10px" }}
                   >
-                    Due {dueDate}
+                    {t("home.due", { date: dueDate })}
                   </p>
                 )}
               </div>
@@ -161,24 +176,25 @@ function EveHome() {
 
       {/* Ask Eve */}
       <Link to="/eve/ask" className="mx-3 mt-3 block">
-        <AICard className="flex items-center gap-3 p-4">
+        <AICard className="flex items-center gap-3 p-4 rtl:flex-row-reverse">
           <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/15">
             <MessageCircle className="h-5 w-5 text-white" />
           </div>
-          <div className="min-w-0 flex-1">
+          <div className="min-w-0 flex-1 rtl:text-right">
             <p
               className="font-sans uppercase tracking-widest text-white/70"
               style={{ fontSize: "10px" }}
             >
-              Ask Eve anything
+              {t("ask.title")}
             </p>
             <p className="mt-0.5 truncate font-sans italic text-white text-sm">
-              "{askSuggestionFor(week)}"
+              "{t("ask.placeholder")}"
             </p>
           </div>
-          <ArrowRight className="h-4 w-4 shrink-0 text-white" />
+          <ArrowRight className="h-4 w-4 shrink-0 text-white rtl:rotate-180" />
         </AICard>
       </Link>
+
 
       {/* Today's guidance */}
       <div className="mx-3 mt-3">
@@ -189,11 +205,11 @@ function EveHome() {
             <button
               type="button"
               onClick={() => setExpanded((v) => !v)}
-              className="block w-full text-left"
+              className="block w-full text-left rtl:text-right"
             >
-              <div className="flex items-start justify-between gap-2">
+              <div className="flex items-start justify-between gap-2 rtl:flex-row-reverse">
                 <SectionLabel className="!text-eve-terra">
-                  Today's guidance
+                  {t("home.todaysGuidance")}
                 </SectionLabel>
                 <ChevronDown
                   className={cn(
@@ -225,7 +241,7 @@ function EveHome() {
                   style={{ fontSize: "11px" }}
                 >
                   <Check className="h-3 w-3" strokeWidth={3} />
-                  Reviewed by Dr. {reviewerName}
+                  {t("home.reviewedBy", { name: reviewerName })}
                 </span>
               )}
             </button>
@@ -233,45 +249,45 @@ function EveHome() {
         ) : (
           <GuidanceCard>
             <SectionLabel className="!text-eve-terra">
-              Today's guidance
+              {t("home.todaysGuidance")}
             </SectionLabel>
             <p
-              className="mt-1 font-sans text-eve-muted"
+              className="mt-1 font-sans text-eve-muted rtl:text-right"
               style={{ fontSize: "12px" }}
             >
-              New guidance for week {week} is on the way.
+              {t("home.guidanceComing", { week })}
             </p>
           </GuidanceCard>
         )}
       </div>
 
       {/* Quick actions */}
-      <div className="mt-5 px-3">
-        <SectionLabel>Quick actions</SectionLabel>
+      <div className="mt-5 px-3 rtl:text-right">
+        <SectionLabel>{t("home.quickActions")}</SectionLabel>
         <div className="mt-2 grid grid-cols-2 gap-2">
           <QuickAction
             to="/eve/providers"
             icon={<Stethoscope className="h-[18px] w-[18px] text-eve-teal" />}
-            label="Find a doctor"
-            sub="Verified providers"
+            label={t("home.findDoctor")}
+            sub={t("home.verifiedProviders")}
           />
           <QuickAction
             to="/eve/vendors"
             icon={<ShoppingBag className="h-[18px] w-[18px] text-eve-terra" />}
-            label="Shop vendors"
-            sub="Mama essentials"
+            label={t("home.shopVendors")}
+            sub={t("home.mamaEssentials")}
           />
           <QuickAction
             to="/eve/appointments"
             icon={<Calendar className="h-[18px] w-[18px] text-eve-forest" />}
-            label="My bookings"
-            sub="Upcoming visits"
+            label={t("home.myBookings")}
+            sub={t("home.upcomingVisits")}
           />
           <QuickAction
             to="/eve/community"
             icon={<Users className="h-[18px] w-[18px] text-eve-rose" />}
-            label="Community"
-            sub="Mothers near you"
+            label={t("home.community")}
+            sub={t("home.mothersNearYou")}
           />
         </div>
       </div>

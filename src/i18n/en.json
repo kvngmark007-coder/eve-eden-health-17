@@ -1,0 +1,105 @@
+{
+  "nav": {
+    "home": "Home",
+    "providers": "Doctors",
+    "vendors": "Shop",
+    "appointments": "Appointments",
+    "community": "Community",
+    "ask": "Ask Eve",
+    "guidance": "Guidance",
+    "profile": "Profile"
+  },
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "continue": "Continue",
+    "back": "Back",
+    "loading": "Loading…",
+    "skip": "Skip for now",
+    "yes": "Yes",
+    "no": "No",
+    "signOut": "Sign out",
+    "signUp": "Sign up",
+    "signIn": "Sign in"
+  },
+  "home": {
+    "greeting_morning": "Good morning",
+    "greeting_afternoon": "Good afternoon",
+    "greeting_evening": "Good evening",
+    "weekOf": "Week {{week}} of your pregnancy",
+    "loadingWeek": "Loading your week…",
+    "babySize": "Baby is about the size of {{size}}.",
+    "due": "Due {{date}}",
+    "todaysGuidance": "Today's guidance",
+    "guidanceComing": "New guidance for week {{week}} is on the way.",
+    "reviewedBy": "Reviewed by Dr. {{name}}",
+    "quickActions": "Quick actions",
+    "findDoctor": "Find a doctor",
+    "verifiedProviders": "Verified providers",
+    "shopVendors": "Shop vendors",
+    "mamaEssentials": "Mama essentials",
+    "myBookings": "My bookings",
+    "upcomingVisits": "Upcoming visits",
+    "community": "Community",
+    "mothersNearYou": "Mothers near you"
+  },
+  "ask": {
+    "title": "Ask Eve anything",
+    "placeholder": "Type your question…",
+    "disclaimer": "Eve gives general guidance — it is not a substitute for medical advice. For urgent symptoms, contact your provider."
+  },
+  "trimester": {
+    "first": "First trimester",
+    "second": "Second trimester",
+    "third": "Third trimester"
+  },
+  "appt": {
+    "title": "Appointments",
+    "status": {
+      "confirmed": "Confirmed",
+      "pending": "Pending",
+      "completed": "Completed",
+      "cancelled": "Cancelled"
+    },
+    "empty": "No upcoming appointments yet."
+  },
+  "onboarding": {
+    "welcome": "Welcome to Eve",
+    "tagline": "Your pregnancy companion, in the language you think in.",
+    "tellUs": "Tell us about your pregnancy",
+    "dueDate": "Due date",
+    "pickDueDate": "Pick your due date",
+    "weeksAlong": "You are {{week}} weeks along",
+    "firstPregnancy": "Is this your first pregnancy?",
+    "city": "City",
+    "free": "Eve is free for you. Always.",
+    "helpEve": "Help Eve understand you better",
+    "diet": "Dietary preference",
+    "culture": "Cultural context",
+    "whatsappTitle": "WhatsApp reminders",
+    "whatsappBody": "We will send care reminders to your WhatsApp. You can stop anytime.",
+    "haveOb": "Do you already have an OB-GYN?",
+    "searchPlaceholder": "Search by name or clinic",
+    "noVerified": "No verified providers found.",
+    "select": "Select",
+    "selected": "Selected",
+    "ready": "You are ready",
+    "guideEvery": "Eve will guide you through every week of your pregnancy."
+  },
+  "form": {
+    "required": "Required",
+    "invalidEmail": "Enter a valid email",
+    "minPassword": "Password must be at least 6 characters"
+  },
+  "empty": {
+    "noResults": "No results found.",
+    "noProviders": "No verified providers nearby."
+  },
+  "language": {
+    "label": "Language",
+    "fr": "Français",
+    "ar": "العربية",
+    "en": "English",
+    "ber": "Tamazight"
+  }
+}
