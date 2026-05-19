@@ -72,6 +72,41 @@ async function seedDemo() {
     user_type: "provider",
   });
 
+  // Placeholder auth users for the rest of the seeded providers, vendors,
+  // and Eden patients — all referenced tables FK to profiles(id) which FKs
+  // auth.users(id), so we need real auth rows before we can upsert.
+  for (let i = 0; i < DEMO_PROVIDERS.length; i++) {
+    const p = DEMO_PROVIDERS[i];
+    if (i === 1) continue; // Karim already provisioned
+    await ensureAuthUser({
+      id: p.user_id,
+      email: `demo-provider-${i}@eveeden.demo`,
+      password: "DemoProvider!2026",
+      full_name: `Dr. ${p.full_name}`,
+      user_type: "provider",
+    });
+  }
+  for (let i = 0; i < DEMO_VENDORS.length; i++) {
+    const v = DEMO_VENDORS[i];
+    await ensureAuthUser({
+      id: v.user_id,
+      email: `demo-vendor-${i}@eveeden.demo`,
+      password: "DemoVendor!2026",
+      full_name: v.business_name,
+      user_type: "vendor",
+    });
+  }
+  for (let i = 0; i < DEMO_EDEN_PATIENTS.length; i++) {
+    const m = DEMO_EDEN_PATIENTS[i];
+    await ensureAuthUser({
+      id: m.user_id,
+      email: `demo-patient-${i}@eveeden.demo`,
+      password: "DemoPatient!2026",
+      full_name: m.full_name,
+      user_type: "mother",
+    });
+  }
+
   // --- Providers ---
   for (const p of DEMO_PROVIDERS) {
     await supabaseAdmin.from("providers").upsert({
@@ -89,6 +124,7 @@ async function seedDemo() {
       accepting_patients: true,
       avg_rating: 4.8,
       review_count: 42,
+      review_status: "verified",
     });
   }
 
