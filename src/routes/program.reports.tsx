@@ -21,7 +21,7 @@ const RANGES = [
 function ProgramReports() {
   const [rangeId, setRangeId] = useState("90");
   const days = RANGES.find((r) => r.id === rangeId)!.days;
-  const [mothers, setMothers] = useState<{ id: string; created_at: string; district: string | null }[]>([]);
+  const [mothers, setMothers] = useState<{ id: string; created_at: string | null; district: string | null }[]>([]);
   const [visits, setVisits] = useState<{ id: string; visit_date: string; referred: boolean; mother_id: string; chw_id: string }[]>([]);
   const [alerts, setAlerts] = useState<{ id: string; created_at: string; resolved: boolean }[]>([]);
   const [riskLevels, setRiskLevels] = useState<{ risk_level: string | null }[]>([]);
@@ -44,9 +44,11 @@ function ProgramReports() {
 
   const cumulative = useMemo(() => {
     const buckets = new Map<string, number>();
-    const sorted = [...mothers].sort((a, b) => a.created_at.localeCompare(b.created_at));
+    const sorted = [...mothers]
+      .filter((m) => m.created_at)
+      .sort((a, b) => (a.created_at ?? "").localeCompare(b.created_at ?? ""));
     sorted.forEach((m) => {
-      const k = m.created_at.slice(0, 10);
+      const k = (m.created_at ?? "").slice(0, 10);
       buckets.set(k, (buckets.get(k) ?? 0) + 1);
     });
     let total = 0;
