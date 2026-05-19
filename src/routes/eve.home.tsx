@@ -17,7 +17,7 @@ import { SectionLabel } from "@/components/ui/SectionLabel";
 import { AICard } from "@/components/ui/AICard";
 import { GuidanceCard } from "@/components/ui/GuidanceCard";
 import { supabase } from "@/integrations/supabase/client";
-import { babySizeFor, trimesterFor } from "@/lib/babySize";
+import { babySizeFor } from "@/lib/babySize";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/eve/home")({
