@@ -67,7 +67,7 @@ function EveProfile() {
   async function update<K extends keyof Mother>(key: K, value: Mother[K]) {
     if (!m) return;
     setM({ ...m, [key]: value });
-    await supabase.from("mothers").update({ [key]: value }).eq("id", m.id);
+    await supabase.from("mothers").update({ [key]: value } as never).eq("id", m.id);
   }
 
   async function signOut() {
