@@ -18,6 +18,7 @@ export function CHWShell({ children }: { children: ReactNode }) {
     <ProtectedRoute requiredType="chw">
       <div className="min-h-screen bg-white">
         <div className="mx-auto max-w-md">
+          <OfflineBanner />
           <header className="border-b border-gray-100 px-5 py-4">
             <span className="font-serif text-xl text-eve-teal">chw.</span>
           </header>
