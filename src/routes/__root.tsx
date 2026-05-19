@@ -10,6 +10,7 @@ import {
 
 import appCss from "../styles.css?url";
 import { DemoBanner } from "@/components/ui/DemoBanner";
+import "@/i18n";
 
 function NotFoundComponent() {
   return (
