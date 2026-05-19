@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { EveShell } from "@/components/shells/EveShell";
+import { PullToRefresh } from "@/components/ui/PullToRefresh";
 import { StageRing } from "@/components/ui/StageRing";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { AICard } from "@/components/ui/AICard";
@@ -124,6 +125,7 @@ function EveHome() {
 
   return (
     <EveShell>
+      <PullToRefresh>
       {/* Greeting */}
       <div className="px-3 rtl:text-right">
         <SectionLabel>
@@ -291,6 +293,7 @@ function EveHome() {
           />
         </div>
       </div>
+      </PullToRefresh>
     </EveShell>
   );
 }

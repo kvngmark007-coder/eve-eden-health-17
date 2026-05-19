@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { MapPin, RefreshCw, X, Check, Calendar as CalIcon, Baby, Heart, Star } from "lucide-react";
 import { EveShell } from "@/components/shells/EveShell";
+import { PullToRefresh } from "@/components/ui/PullToRefresh";
 import { PrimaryButton } from "@/components/ui/PrimaryButton";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { Switch } from "@/components/ui/switch";
@@ -103,6 +104,7 @@ function EveAppointments() {
 
   return (
     <EveShell>
+      <PullToRefresh>
       <div className="pt-2">
         <SectionLabel>My care</SectionLabel>
         <h1 className="mt-2 font-serif text-3xl text-eve-teal-dark">My care timeline</h1>
@@ -196,6 +198,7 @@ function EveAppointments() {
           })}
         </ol>
       </section>
+      </PullToRefresh>
     </EveShell>
   );
 }
