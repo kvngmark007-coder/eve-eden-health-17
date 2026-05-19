@@ -20,7 +20,7 @@ async function ensureAuthUser(opts: {
   email: string;
   password: string;
   full_name: string;
-  user_type: "mother" | "provider";
+  user_type: "mother" | "provider" | "vendor";
 }) {
   // Try to fetch first
   const { data: existing } = await supabaseAdmin.auth.admin.getUserById(opts.id);
