@@ -98,12 +98,12 @@ export async function hydrateIntakeFromCloud(): Promise<MatchIntake> {
 
   const extras = (data.extras ?? {}) as Record<string, unknown>;
   const merged: MatchIntake = {
-    stage: data.stage ?? undefined,
-    need: data.need ?? undefined,
+    stage: (data.stage as LifeStage | null) ?? undefined,
+    need: (data.need as NeedKey | null) ?? undefined,
     city: data.city ?? undefined,
     language: data.language ?? undefined,
-    payment: data.payment ?? undefined,
-    urgency: data.urgency ?? undefined,
+    payment: (data.payment as PaymentKey | null) ?? undefined,
+    urgency: (data.urgency as Urgency | null) ?? undefined,
     ...extras,
   };
   sessionStorage.setItem(KEY, JSON.stringify(merged));
@@ -129,7 +129,7 @@ export async function persistIntake(): Promise<{ ok: boolean; id?: string }> {
     language: intake.language ?? null,
     payment: intake.payment ?? null,
     urgency: intake.urgency ?? null,
-    extras: splitExtras(intake),
+    extras: splitExtras(intake) as never,
   };
 
   const existing = currentRowId();
