@@ -262,11 +262,13 @@ function OptionTile({
   selected,
   onClick,
   label,
+  sub,
   emoji,
 }: {
   selected: boolean;
   onClick: () => void;
   label: string;
+  sub?: string;
   emoji: string;
 }) {
   return (
@@ -284,6 +286,11 @@ function OptionTile({
       <span className="font-sans text-[12px] font-medium text-eve-teal-dark">
         {label}
       </span>
+      {sub && (
+        <span className="font-sans text-[10px] leading-snug text-eve-muted">
+          {sub}
+        </span>
+      )}
     </button>
   );
 }
