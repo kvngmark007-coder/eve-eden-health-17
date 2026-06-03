@@ -1,9 +1,13 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Heart, MessageCircle, Bookmark, Flame, Plus, X, ArrowLeft, Users, ShieldCheck, Sparkles } from "lucide-react";
 import { EveShell } from "@/components/shells/EveShell";
+import { ContentCard } from "@/components/ui/ContentCard";
+import { SectionLabel } from "@/components/ui/SectionLabel";
 import { useSavedProfile } from "@/hooks/useSavedProfile";
 import { eveToast } from "@/lib/eve-toast";
+import { rankForProfile, type ContentRow } from "@/lib/content-filter";
+import { supabase } from "@/integrations/supabase/client";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/eve/community")({
