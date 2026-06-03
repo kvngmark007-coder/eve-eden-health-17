@@ -25,7 +25,20 @@ type Provider = {
   accepting_patients: boolean | null;
 };
 
-const FILTERS = ["All", "OB-GYN", "Midwife", "Doula", "Lactation", "General"] as const;
+const FILTERS = [
+  "All",
+  "OB-GYN",
+  "Fertility / IVF",
+  "Midwife",
+  "Doula",
+  "Pediatrician",
+  "Therapist",
+  "Lab",
+  "Pharmacy",
+  "Insurance",
+  "Wellness",
+  "Shops",
+] as const;
 
 function initials(name?: string | null) {
   if (!name) return "Dr";
