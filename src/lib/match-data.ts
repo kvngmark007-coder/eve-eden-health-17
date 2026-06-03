@@ -2,6 +2,7 @@
 
 export type LifeStage =
   | "ttc"
+  | "ivf"
   | "pregnant"
   | "postpartum"
   | "newborn"
@@ -10,6 +11,7 @@ export type LifeStage =
   | "labs"
   | "rx"
   | "insurance"
+  | "wellness"
   | "family";
 
 export type NeedKey =
