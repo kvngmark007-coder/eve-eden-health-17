@@ -167,6 +167,39 @@ function CommunityPage() {
   const [hearts, setHearts] = useState<Record<string, number>>({});
   const [saved, setSaved] = useState<Record<string, boolean>>({});
 
+  const [partnerContent, setPartnerContent] = useState<ContentRow[]>([]);
+  const [vendorNames, setVendorNames] = useState<Record<string, string>>({});
+
+  useEffect(() => {
+    (async () => {
+      const { data } = await supabase
+        .from("vendor_content")
+        .select("*")
+        .eq("status", "published")
+        .order("created_at", { ascending: false })
+        .limit(30);
+      const rows = (data ?? []) as ContentRow[];
+      setPartnerContent(rows);
+      const ids = [...new Set(rows.map((r) => r.vendor_id))];
+      if (ids.length) {
+        const { data: vs } = await supabase
+          .from("vendors")
+          .select("id,business_name")
+          .in("id", ids);
+        const map: Record<string, string> = {};
+        (vs ?? []).forEach((v: { id: string; business_name: string | null }) => {
+          map[v.id] = v.business_name ?? "Partner";
+        });
+        setVendorNames(map);
+      }
+    })();
+  }, []);
+
+  const personalizedContent = useMemo(
+    () => rankForProfile(partnerContent, profile).slice(0, 6),
+    [partnerContent, profile],
+  );
+
   const filtered = useMemo(
     () => (active === "all" ? SEED_POSTS : SEED_POSTS.filter((p) => p.category === active)),
     [active],
