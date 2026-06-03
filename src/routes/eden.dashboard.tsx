@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowDownRight, ArrowUpRight } from "lucide-react";
+import { ArrowDownRight, ArrowUpRight, PenLine } from "lucide-react";
 import { EdenShell } from "@/components/shells/EdenShell";
 import { supabase } from "@/integrations/supabase/client";
 import { cn } from "@/lib/utils";
