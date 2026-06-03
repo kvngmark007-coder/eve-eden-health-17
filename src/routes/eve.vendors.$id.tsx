@@ -4,6 +4,8 @@ import { ArrowLeft, Minus, Plus, ShoppingCart, X } from "lucide-react";
 import { TrustBadge } from "@/components/ui/TrustBadge";
 import { PrimaryButton } from "@/components/ui/PrimaryButton";
 import { Skeleton } from "@/components/ui/skeleton";
+import { ContentCard } from "@/components/ui/ContentCard";
+import { SectionLabel } from "@/components/ui/SectionLabel";
 import {
   Sheet,
   SheetContent,
@@ -12,6 +14,7 @@ import {
 } from "@/components/ui/sheet";
 import { supabase } from "@/integrations/supabase/client";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
+import type { ContentRow } from "@/lib/content-filter";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/eve/vendors/$id")({
