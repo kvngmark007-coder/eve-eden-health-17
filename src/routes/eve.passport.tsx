@@ -129,7 +129,7 @@ function PassportPage() {
       <div className="mt-5 rounded-2xl bg-white p-4">
         <p className="font-sans text-xs uppercase tracking-wide text-eve-muted">About me</p>
         <p className="mt-2 font-sans text-sm text-eve-teal-dark">
-          {[profile.stage, profile.languages?.[0], profile.city, profile.paymentPreference]
+          {[profile.stage, profile.languages?.[0], profile.city, profile.payment]
             .filter(Boolean)
             .join(" · ") || "Complete your profile to personalize your passport."}
         </p>
