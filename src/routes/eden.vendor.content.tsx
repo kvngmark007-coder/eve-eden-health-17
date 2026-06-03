@@ -99,7 +99,7 @@ function VendorContentStudio() {
   }
 
   return (
-    <EdenShell variant="vendor">
+    <EdenShell variant={variant} allowedTypes={["provider", "vendor"]}>
       <div className="flex items-start justify-between">
         <div>
           <h1 className="font-sans text-2xl font-semibold text-eve-teal-dark">Content Studio</h1>
