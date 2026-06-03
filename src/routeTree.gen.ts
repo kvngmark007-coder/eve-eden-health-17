@@ -22,6 +22,7 @@ import { Route as ProgramAlertsRouteImport } from './routes/program.alerts'
 import { Route as EveVendorsRouteImport } from './routes/eve.vendors'
 import { Route as EveProvidersRouteImport } from './routes/eve.providers'
 import { Route as EveProfileRouteImport } from './routes/eve.profile'
+import { Route as EvePassportRouteImport } from './routes/eve.passport'
 import { Route as EveOnboardingRouteImport } from './routes/eve.onboarding'
 import { Route as EveMatchRouteImport } from './routes/eve.match'
 import { Route as EveHomeRouteImport } from './routes/eve.home'
@@ -134,6 +135,11 @@ const EveProvidersRoute = EveProvidersRouteImport.update({
 const EveProfileRoute = EveProfileRouteImport.update({
   id: '/eve/profile',
   path: '/eve/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EvePassportRoute = EvePassportRouteImport.update({
+  id: '/eve/passport',
+  path: '/eve/passport',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EveOnboardingRoute = EveOnboardingRouteImport.update({
@@ -410,6 +416,7 @@ export interface FileRoutesByFullPath {
   '/eve/home': typeof EveHomeRoute
   '/eve/match': typeof EveMatchRouteWithChildren
   '/eve/onboarding': typeof EveOnboardingRoute
+  '/eve/passport': typeof EvePassportRoute
   '/eve/profile': typeof EveProfileRoute
   '/eve/providers': typeof EveProvidersRouteWithChildren
   '/eve/vendors': typeof EveVendorsRouteWithChildren
@@ -473,6 +480,7 @@ export interface FileRoutesByTo {
   '/eve/home': typeof EveHomeRoute
   '/eve/match': typeof EveMatchRouteWithChildren
   '/eve/onboarding': typeof EveOnboardingRoute
+  '/eve/passport': typeof EvePassportRoute
   '/eve/profile': typeof EveProfileRoute
   '/eve/providers': typeof EveProvidersRouteWithChildren
   '/eve/vendors': typeof EveVendorsRouteWithChildren
@@ -537,6 +545,7 @@ export interface FileRoutesById {
   '/eve/home': typeof EveHomeRoute
   '/eve/match': typeof EveMatchRouteWithChildren
   '/eve/onboarding': typeof EveOnboardingRoute
+  '/eve/passport': typeof EvePassportRoute
   '/eve/profile': typeof EveProfileRoute
   '/eve/providers': typeof EveProvidersRouteWithChildren
   '/eve/vendors': typeof EveVendorsRouteWithChildren
@@ -602,6 +611,7 @@ export interface FileRouteTypes {
     | '/eve/home'
     | '/eve/match'
     | '/eve/onboarding'
+    | '/eve/passport'
     | '/eve/profile'
     | '/eve/providers'
     | '/eve/vendors'
@@ -665,6 +675,7 @@ export interface FileRouteTypes {
     | '/eve/home'
     | '/eve/match'
     | '/eve/onboarding'
+    | '/eve/passport'
     | '/eve/profile'
     | '/eve/providers'
     | '/eve/vendors'
@@ -728,6 +739,7 @@ export interface FileRouteTypes {
     | '/eve/home'
     | '/eve/match'
     | '/eve/onboarding'
+    | '/eve/passport'
     | '/eve/profile'
     | '/eve/providers'
     | '/eve/vendors'
@@ -792,6 +804,7 @@ export interface RootRouteChildren {
   EveHomeRoute: typeof EveHomeRoute
   EveMatchRoute: typeof EveMatchRouteWithChildren
   EveOnboardingRoute: typeof EveOnboardingRoute
+  EvePassportRoute: typeof EvePassportRoute
   EveProfileRoute: typeof EveProfileRoute
   EveProvidersRoute: typeof EveProvidersRouteWithChildren
   EveVendorsRoute: typeof EveVendorsRouteWithChildren
@@ -901,6 +914,13 @@ declare module '@tanstack/react-router' {
       path: '/eve/profile'
       fullPath: '/eve/profile'
       preLoaderRoute: typeof EveProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/eve/passport': {
+      id: '/eve/passport'
+      path: '/eve/passport'
+      fullPath: '/eve/passport'
+      preLoaderRoute: typeof EvePassportRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/eve/onboarding': {
@@ -1370,6 +1390,7 @@ const rootRouteChildren: RootRouteChildren = {
   EveHomeRoute: EveHomeRoute,
   EveMatchRoute: EveMatchRouteWithChildren,
   EveOnboardingRoute: EveOnboardingRoute,
+  EvePassportRoute: EvePassportRoute,
   EveProfileRoute: EveProfileRoute,
   EveProvidersRoute: EveProvidersRouteWithChildren,
   EveVendorsRoute: EveVendorsRouteWithChildren,
