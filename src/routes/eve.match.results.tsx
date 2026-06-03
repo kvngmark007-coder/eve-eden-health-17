@@ -203,7 +203,49 @@ const PATHWAYS: Partial<Record<LifeStage, Pathway>> = {
     tools: [TOOLS.family, TOOLS.providers, TOOLS.insurance, TOOLS.navigator],
     providerCategories: [],
   },
+  labs: {
+    eyebrow: "Lab results support",
+    headline: "Your lab results support plan",
+    recommended:
+      "Upload or enter your lab result and we'll help you understand what to ask next, then connect you with a provider if needed.",
+    actions: [
+      { label: "Upload result", to: "/eve/match/labs" },
+      { label: "Find a lab/provider", to: "/eve/providers" },
+      { label: "Ask navigator", to: "/eve/ask" },
+    ],
+    tools: [TOOLS.labs, TOOLS.providers, TOOLS.rx, TOOLS.insurance, TOOLS.navigator],
+    providerCategories: ["Lab", "OB-GYN", "Wellness"],
+  },
+  rx: {
+    eyebrow: "Prescription support",
+    headline: "Your prescription support plan",
+    recommended:
+      "Add a medication or upload your prescription and we'll help you prepare the right questions, find a pharmacy, and check cost options.",
+    actions: [
+      { label: "Add medication", to: "/eve/match/prescriptions" },
+      { label: "Find pharmacy", to: "/eve/providers" },
+      { label: "Check payment", to: "/eve/match/insurance" },
+      { label: "Ask navigator", to: "/eve/ask" },
+    ],
+    tools: [TOOLS.rx, TOOLS.providers, TOOLS.insurance, TOOLS.navigator],
+    providerCategories: ["Pharmacy", "OB-GYN"],
+  },
+  insurance: {
+    eyebrow: "Insurance & payment",
+    headline: "Your insurance & payment options",
+    recommended:
+      "Compare local, international, and self-pay options that fit your life stage and budget.",
+    actions: [
+      { label: "Compare vendors", to: "/eve/match/insurance" },
+      { label: "Find providers", to: "/eve/providers" },
+      { label: "Invite family", to: "/eve/match/family" },
+      { label: "Ask navigator", to: "/eve/ask" },
+    ],
+    tools: [TOOLS.insurance, TOOLS.providers, TOOLS.family, TOOLS.navigator],
+    providerCategories: [],
+  },
 };
+
 
 const DEFAULT_PATHWAY: Pathway = {
   eyebrow: "Your matches",
