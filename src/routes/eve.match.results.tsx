@@ -85,7 +85,9 @@ function MatchResults() {
         </div>
         <SectionLabel>Your matches</SectionLabel>
         <h1 className="mt-1 font-serif text-eve-forest" style={{ fontSize: "22px" }}>
-          Here are your best next steps
+          {intake.stage === "ttc" || intake.stage === "ivf"
+            ? "Here are your best next steps for fertility support"
+            : "Here are your best next steps"}
         </h1>
       </div>
 
