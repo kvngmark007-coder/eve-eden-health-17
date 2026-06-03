@@ -213,6 +213,9 @@ function EdenDashboard() {
         <span className="font-sans text-xs font-medium text-eve-teal">Open →</span>
       </Link>
 
+      <CoordinationPanels />
+
+
       {/* Today's schedule */}
       <section className="mt-8 rounded-xl border border-gray-200 bg-white">
         <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100">
