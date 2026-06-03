@@ -89,15 +89,17 @@ function ContentReader() {
 
   async function ctaClick() {
     if (!row) return;
+    const r = row as ContentRow & Record<string, number>;
     const updates: Record<string, number> = {};
-    if (row.cta_type === "book") updates.booking_clicks = (row as any).booking_clicks + 1;
-    if (row.cta_type === "quote") updates.quote_requests = (row as any).quote_requests + 1;
-    if (row.cta_type === "message") updates.messages = (row as any).messages + 1;
-    if (row.cta_type === "register") updates.event_registrations = (row as any).event_registrations + 1;
-    if (row.cta_type === "shop") updates.shop_clicks = (row as any).shop_clicks + 1;
-    if (row.cta_type === "profile") updates.profile_visits = (row as any).profile_visits + 1;
+    if (row.cta_type === "book") updates.booking_clicks = (r.booking_clicks ?? 0) + 1;
+    if (row.cta_type === "quote") updates.quote_requests = (r.quote_requests ?? 0) + 1;
+    if (row.cta_type === "message") updates.messages = (r.messages ?? 0) + 1;
+    if (row.cta_type === "register") updates.event_registrations = (r.event_registrations ?? 0) + 1;
+    if (row.cta_type === "shop") updates.shop_clicks = (r.shop_clicks ?? 0) + 1;
+    if (row.cta_type === "profile") updates.profile_visits = (r.profile_visits ?? 0) + 1;
     if (Object.keys(updates).length) {
-      await supabase.from("vendor_content").update(updates).eq("id", row.id);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      await supabase.from("vendor_content").update(updates as any).eq("id", row.id);
     }
     if (row.cta_type === "profile" && vendor) {
       nav({ to: "/eve/vendors/$id", params: { id: vendor.id } });
