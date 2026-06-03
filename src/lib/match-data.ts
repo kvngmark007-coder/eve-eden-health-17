@@ -2,6 +2,7 @@
 
 export type LifeStage =
   | "ttc"
+  | "ivf"
   | "pregnant"
   | "postpartum"
   | "newborn"
@@ -10,6 +11,7 @@ export type LifeStage =
   | "labs"
   | "rx"
   | "insurance"
+  | "wellness"
   | "family";
 
 export type NeedKey =
@@ -142,6 +144,48 @@ export const MATCH_PROVIDERS: MatchProvider[] = [
     tags: ["breastfeeding", "newborn", "home visit"],
     tier: "Preferred Partner",
     bestFor: ["postpartum", "newborn"],
+  },
+  {
+    id: "mp-7",
+    name: "Clinique Fertilité Atlas",
+    category: "Fertility clinic",
+    city: "Casablanca",
+    languages: ["Arabic", "French", "English"],
+    priceRange: "From 1,800 MAD",
+    acceptsSelfPay: true,
+    acceptsInternational: true,
+    visitTypes: ["in-person", "telehealth"],
+    tags: ["IVF support", "fertility labs", "international insurance documentation"],
+    tier: "Clinical Partner",
+    bestFor: ["ttc", "ivf", "pcos"],
+  },
+  {
+    id: "mp-8",
+    name: "Dr. Salma El Idrissi",
+    category: "Reproductive endocrinologist",
+    city: "Rabat",
+    languages: ["French", "English", "Arabic"],
+    priceRange: "700 MAD",
+    acceptsSelfPay: true,
+    acceptsInternational: true,
+    visitTypes: ["in-person", "telehealth"],
+    tags: ["IVF support", "PCOS support", "fertility labs"],
+    tier: "Preferred Partner",
+    bestFor: ["ttc", "ivf", "pcos"],
+  },
+  {
+    id: "mp-9",
+    name: "Wellness Atelier Casa",
+    category: "Wellness",
+    city: "Casablanca",
+    languages: ["French", "English"],
+    priceRange: "From 250 MAD",
+    acceptsSelfPay: true,
+    acceptsInternational: false,
+    visitTypes: ["in-person", "telehealth"],
+    tags: ["nutrition", "preventive care", "PCOS support"],
+    tier: "Verified",
+    bestFor: ["wellness", "pcos", "ttc"],
   },
 ];
 

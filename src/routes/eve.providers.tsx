@@ -25,7 +25,20 @@ type Provider = {
   accepting_patients: boolean | null;
 };
 
-const FILTERS = ["All", "OB-GYN", "Midwife", "Doula", "Lactation", "General"] as const;
+const FILTERS = [
+  "All",
+  "OB-GYN",
+  "Fertility / IVF",
+  "Midwife",
+  "Doula",
+  "Pediatrician",
+  "Therapist",
+  "Lab",
+  "Pharmacy",
+  "Insurance",
+  "Wellness",
+  "Shops",
+] as const;
 
 function initials(name?: string | null) {
   if (!name) return "Dr";
@@ -94,8 +107,11 @@ function EveProviders() {
   return (
     <EveShell>
       <h1 className="font-serif text-[26px] leading-tight text-eve-forest">
-        Find a doctor
+        Find care
       </h1>
+      <p className="mt-1 font-sans text-xs text-eve-muted">
+        Doctors, midwives, doulas, labs, pharmacies, insurance and wellness — all in one place.
+      </p>
 
       <div className="mt-4 flex items-center gap-2 rounded-full bg-eve-cream px-4 py-3">
         <Search className="h-4 w-4 text-eve-muted" />

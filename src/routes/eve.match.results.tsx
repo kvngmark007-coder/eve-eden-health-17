@@ -85,7 +85,9 @@ function MatchResults() {
         </div>
         <SectionLabel>Your matches</SectionLabel>
         <h1 className="mt-1 font-serif text-eve-forest" style={{ fontSize: "22px" }}>
-          Here are your best next steps
+          {intake.stage === "ttc" || intake.stage === "ivf"
+            ? "Here are your best next steps for fertility support"
+            : "Here are your best next steps"}
         </h1>
       </div>
 
@@ -262,6 +264,10 @@ function MatchResults() {
 function recommendedStep(i: ReturnType<typeof readIntake>) {
   if (i.urgency === "today")
     return "We've prioritised providers available today. Tap Request Booking on a match below to confirm a slot.";
+  if (i.stage === "ivf")
+    return "Compare fertility clinics, recommended labs, and medication or self-pay packages — and talk to a care navigator when you're ready.";
+  if (i.stage === "ttc")
+    return "Explore preconception care, fertility labs, and clinics that match your budget and language.";
   if (i.need === "labs_explain")
     return "Upload your lab result and we'll explain it in plain language so you can prepare for your next visit.";
   if (i.need === "rx_explain")

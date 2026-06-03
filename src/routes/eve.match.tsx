@@ -14,17 +14,19 @@ export const Route = createFileRoute("/eve/match")({
   component: MatchIntake,
 });
 
-const STAGES: { key: LifeStage; label: string; emoji: string }[] = [
-  { key: "ttc", label: "Trying to conceive", emoji: "🌱" },
-  { key: "pregnant", label: "Pregnant", emoji: "🤰" },
-  { key: "postpartum", label: "Postpartum", emoji: "🍼" },
-  { key: "newborn", label: "Newborn or child care", emoji: "👶" },
-  { key: "pcos", label: "PCOS / hormonal health", emoji: "🌸" },
-  { key: "mood", label: "Anxiety or mood support", emoji: "💛" },
-  { key: "labs", label: "Lab results", emoji: "🧪" },
-  { key: "rx", label: "Prescription support", emoji: "💊" },
-  { key: "insurance", label: "Insurance or payment", emoji: "🛡️" },
-  { key: "family", label: "Helping a family member", emoji: "🤝" },
+const STAGES: { key: LifeStage; label: string; sub: string; emoji: string }[] = [
+  { key: "ttc", label: "Trying to conceive", sub: "Fertility, cycle tracking, preconception care", emoji: "🌱" },
+  { key: "ivf", label: "IVF or fertility treatment", sub: "Clinics, labs, medication, emotional support", emoji: "🧬" },
+  { key: "pregnant", label: "Pregnant", sub: "Prenatal care, labs, symptoms, providers", emoji: "🤰" },
+  { key: "postpartum", label: "Postpartum", sub: "Recovery, feeding, mood, follow-up care", emoji: "🍼" },
+  { key: "newborn", label: "Newborn or child care", sub: "Pediatric care, feeding, milestones", emoji: "👶" },
+  { key: "pcos", label: "PCOS / hormonal health", sub: "Labs, symptoms, cycle support", emoji: "🌸" },
+  { key: "labs", label: "Lab results", sub: "Understand results and next steps", emoji: "🧪" },
+  { key: "rx", label: "Prescription support", sub: "Medication, refills, safety questions", emoji: "💊" },
+  { key: "insurance", label: "Insurance or payment", sub: "Coverage, self-pay, international insurance", emoji: "🛡️" },
+  { key: "mood", label: "Anxiety or mood support", sub: "Mental health, stress, postpartum emotions", emoji: "💛" },
+  { key: "wellness", label: "Wellness or preventive care", sub: "Annual visits, screenings, nutrition", emoji: "🌿" },
+  { key: "family", label: "Helping a family member", sub: "Coordinate care or help pay", emoji: "🤝" },
 ];
 
 const NEEDS: { key: NeedKey; label: string }[] = [
@@ -131,6 +133,7 @@ function MatchIntake() {
                 selected={stage === s.key}
                 onClick={() => setStage(s.key)}
                 label={s.label}
+                sub={s.sub}
                 emoji={s.emoji}
               />
             ))}
@@ -259,11 +262,13 @@ function OptionTile({
   selected,
   onClick,
   label,
+  sub,
   emoji,
 }: {
   selected: boolean;
   onClick: () => void;
   label: string;
+  sub?: string;
   emoji: string;
 }) {
   return (
@@ -281,6 +286,11 @@ function OptionTile({
       <span className="font-sans text-[12px] font-medium text-eve-teal-dark">
         {label}
       </span>
+      {sub && (
+        <span className="font-sans text-[10px] leading-snug text-eve-muted">
+          {sub}
+        </span>
+      )}
     </button>
   );
 }
