@@ -244,7 +244,20 @@ function EveProviders() {
 }
 
 
-function ProviderCard({ p }: { p: Provider }) {
+function ProviderCard({
+  p,
+  userLang,
+  userCity,
+}: {
+  p: Provider;
+  userLang?: string | null;
+  userCity?: string | null;
+}) {
+  const langs = p.languages ?? [];
+  const langMatch = !!userLang && langs.some((l) => l.toLowerCase().includes(userLang.toLowerCase()));
+  const cityMatch = !!userCity && (p.city ?? "").toLowerCase().includes(userCity.toLowerCase());
+  const hasMatch = langMatch || cityMatch;
+
   return (
     <article className="rounded-2xl bg-white p-4 shadow-sm">
       <div className="flex gap-3">
@@ -252,22 +265,36 @@ function ProviderCard({ p }: { p: Provider }) {
           {initials(p.full_name)}
         </div>
         <div className="min-w-0 flex-1">
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             <h3 className="truncate font-sans text-sm font-medium text-eve-forest">
               {p.full_name ?? "Doctor"}
             </h3>
             {p.is_verified && <TrustBadge />}
+            {p.accepting_patients && (
+              <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2 py-0.5 font-sans text-[10px] text-emerald-700">
+                <CheckCircle2 className="h-2.5 w-2.5" /> Accepting patients
+              </span>
+            )}
           </div>
           <p className="font-sans text-xs text-eve-muted">
             {p.specialty ?? "General"}
             {p.clinic_name ? ` • ${p.clinic_name}` : ""}
           </p>
-          <p className="mt-0.5 font-sans text-[10px] text-eve-muted">
-            {p.city ?? ""}
-            {p.languages?.length ? ` • ${p.languages.join(", ")}` : ""}
-          </p>
 
-          <div className="mt-2 flex items-center gap-2">
+          <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 font-sans text-[11px] text-eve-muted">
+            {p.city && (
+              <span className={cn("inline-flex items-center gap-1", cityMatch && "text-eve-teal-dark")}>
+                <MapPin className="h-3 w-3" /> {p.city}
+              </span>
+            )}
+            {langs.length > 0 && (
+              <span className={cn("inline-flex items-center gap-1", langMatch && "text-eve-teal-dark")}>
+                <Languages className="h-3 w-3" /> {langs.slice(0, 3).join(", ")}
+              </span>
+            )}
+          </div>
+
+          <div className="mt-2 flex flex-wrap items-center gap-2">
             <span className="inline-flex items-center gap-0.5 font-sans text-[11px] text-eve-terra">
               <Star className="h-3 w-3 fill-eve-terra" />
               {p.avg_rating?.toFixed(1) ?? "—"}
@@ -278,6 +305,16 @@ function ProviderCard({ p }: { p: Provider }) {
             {p.consultation_fee_mad != null && (
               <span className="rounded-full bg-eve-teal-light px-2 py-0.5 font-sans text-[10px] text-eve-teal-dark">
                 {p.consultation_fee_mad} MAD
+              </span>
+            )}
+            {hasMatch && (
+              <span className="inline-flex items-center gap-1 rounded-full bg-eve-teal/10 px-2 py-0.5 font-sans text-[10px] text-eve-teal-dark">
+                <Sparkles className="h-2.5 w-2.5" />
+                {langMatch && cityMatch
+                  ? "Matches your language & city"
+                  : langMatch
+                  ? "Speaks your language"
+                  : "Near you"}
               </span>
             )}
           </div>
@@ -299,3 +336,4 @@ function ProviderCard({ p }: { p: Provider }) {
     </article>
   );
 }
+
