@@ -129,7 +129,7 @@ function EveVendors() {
   const filtered = useMemo(() => {
     const sq = serviceQuery.trim().toLowerCase();
     const cq = credential.trim().toLowerCase();
-    return vendors
+    const base = vendors
       .filter((v) => (v.country ?? "MA") === country)
       .filter((v) => (cat === "All" ? true : v.category === CATEGORY_VALUE[cat]))
       .filter((v) =>
@@ -143,7 +143,51 @@ function EveVendors() {
         language ? (v.languages ?? []).some((l) => l?.toLowerCase() === language.toLowerCase()) : true,
       )
       .filter((v) => (cq ? (v.credentials ?? "").toLowerCase().includes(cq) : true));
-  }, [vendors, country, cat, serviceQuery, language, credential]);
+
+    const sorted = [...base];
+    switch (sortBy) {
+      case "recommended":
+        sorted.sort((a, b) => {
+          const fa = a.is_featured ? 1 : 0;
+          const fb = b.is_featured ? 1 : 0;
+          if (fb !== fa) return fb - fa;
+          const va = a.is_verified ? 1 : 0;
+          const vb = b.is_verified ? 1 : 0;
+          if (vb !== va) return vb - va;
+          return (a.business_name ?? "").localeCompare(b.business_name ?? "");
+        });
+        break;
+      case "nearest":
+        sorted.sort((a, b) => {
+          if (userCity) {
+            const ca = (a.city ?? "").toLowerCase() === userCity.toLowerCase() ? 1 : 0;
+            const cb = (b.city ?? "").toLowerCase() === userCity.toLowerCase() ? 1 : 0;
+            if (cb !== ca) return cb - ca;
+          }
+          return (a.city ?? "").localeCompare(b.city ?? "");
+        });
+        break;
+      case "newest":
+        sorted.sort((a, b) => {
+          const da = a.created_at ? new Date(a.created_at).getTime() : 0;
+          const db = b.created_at ? new Date(b.created_at).getTime() : 0;
+          return db - da;
+        });
+        break;
+      case "highest_rated":
+        sorted.sort((a, b) => {
+          const ra = a.avg_rating ?? 0;
+          const rb = b.avg_rating ?? 0;
+          if (rb !== ra) return rb - ra;
+          const fa = a.is_featured ? 1 : 0;
+          const fb = b.is_featured ? 1 : 0;
+          if (fb !== fa) return fb - fa;
+          return (a.business_name ?? "").localeCompare(b.business_name ?? "");
+        });
+        break;
+    }
+    return sorted;
+  }, [vendors, country, cat, serviceQuery, language, credential, sortBy, userCity]);
 
   const languageOptions = useMemo(() => {
     const set = new Set<string>();
