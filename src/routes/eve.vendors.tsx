@@ -47,6 +47,8 @@ type Vendor = {
   services: string | null;
   languages: string[] | null;
   credentials: string | null;
+  avg_rating: number | null;
+  created_at: string | null;
 };
 
 function initials(name: string | null) {
