@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { ArrowLeft, ChevronRight, Search, Store, X } from "lucide-react";
+import { ArrowLeft, ArrowUpDown, ChevronRight, Search, Store, X } from "lucide-react";
 import { EveShell } from "@/components/shells/EveShell";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { TrustBadge } from "@/components/ui/TrustBadge";
