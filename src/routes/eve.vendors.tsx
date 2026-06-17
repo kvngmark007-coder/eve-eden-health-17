@@ -225,6 +225,61 @@ function EveVendors() {
         ))}
       </div>
 
+      {/* Filters */}
+      <div className="mt-4 flex flex-col gap-2">
+        <div className="flex items-center gap-2 rounded-full bg-eve-cream px-4 py-2.5">
+          <Search className="h-4 w-4 text-eve-muted" />
+          <input
+            value={serviceQuery}
+            onChange={(e) => setServiceQuery(e.target.value)}
+            placeholder="Search services (e.g. lactation, prenatal yoga)"
+            className="flex-1 bg-transparent font-sans text-xs text-eve-forest outline-none placeholder:text-eve-muted"
+          />
+          {serviceQuery && (
+            <button onClick={() => setServiceQuery("")} aria-label="Clear">
+              <X className="h-3.5 w-3.5 text-eve-muted" />
+            </button>
+          )}
+        </div>
+        <div className="flex gap-2">
+          <select
+            value={language}
+            onChange={(e) => setLanguage(e.target.value)}
+            className="flex-1 rounded-full border border-eve-muted/30 bg-white px-3 py-2 font-sans text-xs text-eve-forest outline-none"
+          >
+            <option value="">All languages</option>
+            {languageOptions.map((l) => (
+              <option key={l} value={l}>{l}</option>
+            ))}
+          </select>
+          <select
+            value={credential}
+            onChange={(e) => setCredential(e.target.value)}
+            className="flex-1 rounded-full border border-eve-muted/30 bg-white px-3 py-2 font-sans text-xs text-eve-forest outline-none"
+          >
+            <option value="">All credentials</option>
+            {credentialOptions.map((c) => (
+              <option key={c} value={c}>{c}</option>
+            ))}
+          </select>
+        </div>
+        {hasActiveFilters && (
+          <button
+            onClick={() => {
+              setServiceQuery("");
+              setLanguage("");
+              setCredential("");
+              setCat("All");
+            }}
+            className="self-end font-sans text-[11px] text-eve-teal"
+          >
+            Clear filters
+          </button>
+        )}
+      </div>
+
+
+
       {/* List */}
       <section className="mt-4 flex flex-col gap-3">
         {loading ? (
