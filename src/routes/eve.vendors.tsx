@@ -17,12 +17,22 @@ export const Route = createFileRoute("/eve/vendors")({
 
 const CATEGORIES = [
   "All",
+  "Care Services",
   "Maternity wear",
   "Baby gear",
   "Nutrition",
   "Pharmacy",
   "Classes",
 ] as const;
+
+const CATEGORY_VALUE: Record<string, string> = {
+  "Care Services": "care_services",
+  "Maternity wear": "maternity_wear",
+  "Baby gear": "baby_gear",
+  Nutrition: "nutrition",
+  Pharmacy: "pharmacy",
+  Classes: "classes",
+};
 
 type Vendor = {
   id: string;
