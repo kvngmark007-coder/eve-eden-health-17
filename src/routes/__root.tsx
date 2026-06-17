@@ -14,7 +14,9 @@ import { DemoBanner } from "@/components/ui/DemoBanner";
 import { InstallPrompt } from "@/components/ui/InstallPrompt";
 import { Toaster } from "@/components/ui/sonner";
 import { initPwaInstall } from "@/lib/pwa-install";
+import { useLanguage } from "@/hooks/useLanguage";
 import "@/i18n";
+
 
 function NotFoundComponent() {
   return (
@@ -124,6 +126,8 @@ function RootShell({ children }: { children: React.ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  // Hydrate language + RTL direction app-wide on first paint
+  useLanguage();
 
   useEffect(() => {
     initPwaInstall();
@@ -138,3 +142,4 @@ function RootComponent() {
     </QueryClientProvider>
   );
 }
+

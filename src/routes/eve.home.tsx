@@ -51,20 +51,21 @@ type Guidance = {
 const SKIP_KEY = "eve_personalize_skipped_v1";
 
 // Personalized dashboard titles by life stage
-const STAGE_TITLES: Record<string, { en: string; fr: string }> = {
-  ttc: { en: "Your fertility support plan", fr: "Votre plan de fertilité" },
-  ivf: { en: "Your IVF & fertility care plan", fr: "Votre plan de soins FIV" },
-  pregnant: { en: "Your pregnancy care plan", fr: "Votre plan de grossesse" },
-  postpartum: { en: "Your postpartum support plan", fr: "Votre plan post-partum" },
-  newborn: { en: "Your child care support plan", fr: "Votre plan de garde d'enfant" },
-  pcos: { en: "Your hormonal health support plan", fr: "Votre plan de santé hormonale" },
-  mood: { en: "Your mood support plan", fr: "Votre plan de soutien émotionnel" },
-  labs: { en: "Your lab results support plan", fr: "Votre plan d'analyses" },
-  rx: { en: "Your prescription support plan", fr: "Votre plan d'ordonnances" },
-  insurance: { en: "Your insurance & payment options", fr: "Vos options d'assurance" },
-  wellness: { en: "Your wellness care plan", fr: "Votre plan de bien-être" },
-  family: { en: "Your family care coordination plan", fr: "Votre plan de coordination familiale" },
+const STAGE_TITLES: Record<string, { en: string; fr: string; ar: string }> = {
+  ttc: { en: "Your fertility support plan", fr: "Votre plan de fertilité", ar: "خطة دعم الخصوبة الخاصة بك" },
+  ivf: { en: "Your IVF & fertility care plan", fr: "Votre plan de soins FIV", ar: "خطة رعاية التلقيح الصناعي والخصوبة" },
+  pregnant: { en: "Your pregnancy care plan", fr: "Votre plan de grossesse", ar: "خطة رعاية الحمل الخاصة بك" },
+  postpartum: { en: "Your postpartum support plan", fr: "Votre plan post-partum", ar: "خطة دعم ما بعد الولادة" },
+  newborn: { en: "Your child care support plan", fr: "Votre plan de garde d'enfant", ar: "خطة دعم رعاية الطفل" },
+  pcos: { en: "Your hormonal health support plan", fr: "Votre plan de santé hormonale", ar: "خطة دعم الصحة الهرمونية" },
+  mood: { en: "Your mood support plan", fr: "Votre plan de soutien émotionnel", ar: "خطة دعم الصحة النفسية" },
+  labs: { en: "Your lab results support plan", fr: "Votre plan d'analyses", ar: "خطة دعم نتائج التحاليل" },
+  rx: { en: "Your prescription support plan", fr: "Votre plan d'ordonnances", ar: "خطة دعم الأدوية" },
+  insurance: { en: "Your insurance & payment options", fr: "Vos options d'assurance", ar: "خيارات التأمين والدفع" },
+  wellness: { en: "Your wellness care plan", fr: "Votre plan de bien-être", ar: "خطة العافية الخاصة بك" },
+  family: { en: "Your family care coordination plan", fr: "Votre plan de coordination familiale", ar: "خطة تنسيق رعاية العائلة" },
 };
+
 
 // 5 consolidated Quick Action keys
 type QAKey = "find_care" | "care_support" | "care_plan" | "shops" | "community";
@@ -74,6 +75,7 @@ const QA_DEFS: Record<QAKey, {
   icon: React.ReactNode;
   en: { label: string; sub: string };
   fr: { label: string; sub: string };
+  ar: { label: string; sub: string };
   onClick?: () => void;
 }> = {
   find_care: {
@@ -81,32 +83,38 @@ const QA_DEFS: Record<QAKey, {
     icon: <Stethoscope className="h-[18px] w-[18px] text-eve-teal" />,
     en: { label: "Find Care", sub: "Doctors, midwives, IVF, pediatrics" },
     fr: { label: "Trouver des soins", sub: "Médecins, sages-femmes, FIV, pédiatrie" },
+    ar: { label: "ابحث عن رعاية", sub: "أطباء، قابلات، تلقيح صناعي، أطفال" },
   },
   care_support: {
     to: "/eve/care-support",
     icon: <FlaskConical className="h-[18px] w-[18px] text-eve-teal" />,
     en: { label: "Care Support", sub: "Labs, prescriptions & payment" },
     fr: { label: "Support de soins", sub: "Analyses, ordonnances & paiement" },
+    ar: { label: "دعم الرعاية", sub: "تحاليل، أدوية ودفع" },
   },
   care_plan: {
     to: "/eve/match/results",
     icon: <ClipboardList className="h-[18px] w-[18px] text-eve-forest" />,
     en: { label: "My Care Plan", sub: "Next steps and appointments" },
     fr: { label: "Mon plan de soins", sub: "Prochaines étapes et rendez-vous" },
+    ar: { label: "خطة رعايتي", sub: "الخطوات التالية والمواعيد" },
   },
   shops: {
     to: "/eve/vendors",
     icon: <ShoppingBag className="h-[18px] w-[18px] text-eve-terra" />,
     en: { label: "Shops & Services", sub: "Essentials, wellness, partners" },
     fr: { label: "Boutiques & services", sub: "Essentiels, bien-être, partenaires" },
+    ar: { label: "المتاجر والخدمات", sub: "أساسيات، عافية، شركاء" },
   },
   community: {
     to: "/eve/community",
     icon: <Users className="h-[18px] w-[18px] text-eve-rose" />,
     en: { label: "Community & Support", sub: "Navigator, family, women near you" },
     fr: { label: "Communauté & soutien", sub: "Navigatrice, famille, femmes près de vous" },
+    ar: { label: "المجتمع والدعم", sub: "المرشدة، العائلة، نساء قربك" },
   },
 };
+
 
 const DEFAULT_ORDER: QAKey[] = ["find_care", "care_support", "care_plan", "shops", "community"];
 
@@ -143,7 +151,12 @@ function orderForStage(stage?: LifeStage): QAKey[] {
 
 function EveHome() {
   const { t, i18n } = useTranslation();
-  const lang: "en" | "fr" = i18n.language?.startsWith("fr") ? "fr" : "en";
+  const lang: "en" | "fr" | "ar" = i18n.language?.startsWith("fr")
+    ? "fr"
+    : i18n.language?.startsWith("ar")
+      ? "ar"
+      : "en";
+
   const [loading, setLoading] = useState(true);
   const [mother, setMother] = useState<Mother | null>(null);
   const [guidance, setGuidance] = useState<Guidance | null>(null);
@@ -292,19 +305,20 @@ function EveHome() {
   const isPregnancyStage = stage === "pregnant" || (!stage && (mother?.pregnancy_week ?? 0) > 0);
 
   // Stage-specific "where you are" subtitle for non-pregnant users
-  const STAGE_SUBTITLE: Partial<Record<LifeStage, { en: string; fr: string }>> = {
-    ttc: { en: "Trying to conceive", fr: "Essais de conception" },
-    ivf: { en: "Fertility treatment", fr: "Traitement de fertilité" },
-    postpartum: { en: "Postpartum recovery", fr: "Récupération post-partum" },
-    newborn: { en: "Caring for your child", fr: "Soin de votre enfant" },
-    pcos: { en: "Hormonal health", fr: "Santé hormonale" },
-    mood: { en: "Emotional wellbeing", fr: "Bien-être émotionnel" },
-    labs: { en: "Lab results support", fr: "Soutien analyses" },
-    rx: { en: "Prescription support", fr: "Soutien ordonnances" },
-    insurance: { en: "Coverage & payment", fr: "Couverture & paiement" },
-    wellness: { en: "Wellness journey", fr: "Bien-être" },
-    family: { en: "Family coordination", fr: "Coordination familiale" },
+  const STAGE_SUBTITLE: Partial<Record<LifeStage, { en: string; fr: string; ar: string }>> = {
+    ttc: { en: "Trying to conceive", fr: "Essais de conception", ar: "محاولة الحمل" },
+    ivf: { en: "Fertility treatment", fr: "Traitement de fertilité", ar: "علاج الخصوبة" },
+    postpartum: { en: "Postpartum recovery", fr: "Récupération post-partum", ar: "تعافي ما بعد الولادة" },
+    newborn: { en: "Caring for your child", fr: "Soin de votre enfant", ar: "العناية بطفلك" },
+    pcos: { en: "Hormonal health", fr: "Santé hormonale", ar: "الصحة الهرمونية" },
+    mood: { en: "Emotional wellbeing", fr: "Bien-être émotionnel", ar: "الصحة النفسية" },
+    labs: { en: "Lab results support", fr: "Soutien analyses", ar: "دعم نتائج التحاليل" },
+    rx: { en: "Prescription support", fr: "Soutien ordonnances", ar: "دعم الأدوية" },
+    insurance: { en: "Coverage & payment", fr: "Couverture & paiement", ar: "التغطية والدفع" },
+    wellness: { en: "Wellness journey", fr: "Bien-être", ar: "رحلة العافية" },
+    family: { en: "Family coordination", fr: "Coordination familiale", ar: "تنسيق العائلة" },
   };
+
 
   return (
     <EveShell>
