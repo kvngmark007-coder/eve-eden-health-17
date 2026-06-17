@@ -127,11 +127,24 @@ function EveProviders() {
   }, [country, query]);
 
   const filtered = useMemo(() => {
-    if (filter === "All") return items;
-    return items.filter((p) =>
-      (p.specialty ?? "").toLowerCase().includes(filter.toLowerCase()),
-    );
-  }, [items, filter]);
+    const base = filter === "All"
+      ? items
+      : items.filter((p) => (p.specialty ?? "").toLowerCase().includes(filter.toLowerCase()));
+    // Personalized re-ranking: language match → city match → accepting → rating
+    const userLang = (profile.language ?? "").toLowerCase();
+    const userCity = (profile.city ?? "").toLowerCase();
+    const score = (p: Provider) => {
+      let s = 0;
+      if (userLang && (p.languages ?? []).some((l) => l.toLowerCase().includes(userLang))) s += 4;
+      if (userCity && (p.city ?? "").toLowerCase().includes(userCity)) s += 3;
+      if (p.accepting_patients) s += 1;
+      if (p.is_verified) s += 1;
+      s += (p.avg_rating ?? 0) / 5;
+      return s;
+    };
+    return [...base].sort((a, b) => score(b) - score(a));
+  }, [items, filter, profile.language, profile.city]);
+
 
   return (
     <EveShell>
