@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { ArrowLeft, ChevronRight, Search, Store, X } from "lucide-react";
+import { ArrowLeft, ArrowUpDown, ChevronRight, Search, Store, X } from "lucide-react";
 import { EveShell } from "@/components/shells/EveShell";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { TrustBadge } from "@/components/ui/TrustBadge";
@@ -47,6 +47,8 @@ type Vendor = {
   services: string | null;
   languages: string[] | null;
   credentials: string | null;
+  avg_rating: number | null;
+  created_at: string | null;
 };
 
 function initials(name: string | null) {
@@ -82,6 +84,10 @@ function EveVendors() {
   const [serviceQuery, setServiceQuery] = useState("");
   const [language, setLanguage] = useState<string>("");
   const [credential, setCredential] = useState<string>("");
+  const [userCity, setUserCity] = useState<string>("");
+  const [sortBy, setSortBy] = useState<"recommended" | "nearest" | "newest" | "highest_rated">(
+    "recommended",
+  );
 
   useEffect(() => {
     (async () => {
@@ -90,16 +96,14 @@ function EveVendors() {
       if (userId) {
         const { data: m } = await supabase
           .from("mothers")
-          .select("country")
+          .select("country, city")
           .eq("user_id", userId)
           .maybeSingle();
         if (m?.country) setCountry(m.country);
+        if (m?.city) setUserCity(m.city);
       }
 
-      const { data } = await supabase
-        .from("vendors")
-        .select("*")
-        .eq("is_verified", true);
+      const { data } = await supabase.from("vendors").select("*").eq("is_verified", true);
 
       const vs = (data ?? []) as Vendor[];
       setVendors(vs);
@@ -124,7 +128,7 @@ function EveVendors() {
   const filtered = useMemo(() => {
     const sq = serviceQuery.trim().toLowerCase();
     const cq = credential.trim().toLowerCase();
-    return vendors
+    const base = vendors
       .filter((v) => (v.country ?? "MA") === country)
       .filter((v) => (cat === "All" ? true : v.category === CATEGORY_VALUE[cat]))
       .filter((v) =>
@@ -135,10 +139,56 @@ function EveVendors() {
           : true,
       )
       .filter((v) =>
-        language ? (v.languages ?? []).some((l) => l?.toLowerCase() === language.toLowerCase()) : true,
+        language
+          ? (v.languages ?? []).some((l) => l?.toLowerCase() === language.toLowerCase())
+          : true,
       )
       .filter((v) => (cq ? (v.credentials ?? "").toLowerCase().includes(cq) : true));
-  }, [vendors, country, cat, serviceQuery, language, credential]);
+
+    const sorted = [...base];
+    switch (sortBy) {
+      case "recommended":
+        sorted.sort((a, b) => {
+          const fa = a.is_featured ? 1 : 0;
+          const fb = b.is_featured ? 1 : 0;
+          if (fb !== fa) return fb - fa;
+          const va = a.is_verified ? 1 : 0;
+          const vb = b.is_verified ? 1 : 0;
+          if (vb !== va) return vb - va;
+          return (a.business_name ?? "").localeCompare(b.business_name ?? "");
+        });
+        break;
+      case "nearest":
+        sorted.sort((a, b) => {
+          if (userCity) {
+            const ca = (a.city ?? "").toLowerCase() === userCity.toLowerCase() ? 1 : 0;
+            const cb = (b.city ?? "").toLowerCase() === userCity.toLowerCase() ? 1 : 0;
+            if (cb !== ca) return cb - ca;
+          }
+          return (a.city ?? "").localeCompare(b.city ?? "");
+        });
+        break;
+      case "newest":
+        sorted.sort((a, b) => {
+          const da = a.created_at ? new Date(a.created_at).getTime() : 0;
+          const db = b.created_at ? new Date(b.created_at).getTime() : 0;
+          return db - da;
+        });
+        break;
+      case "highest_rated":
+        sorted.sort((a, b) => {
+          const ra = a.avg_rating ?? 0;
+          const rb = b.avg_rating ?? 0;
+          if (rb !== ra) return rb - ra;
+          const fa = a.is_featured ? 1 : 0;
+          const fb = b.is_featured ? 1 : 0;
+          if (fb !== fa) return fb - fa;
+          return (a.business_name ?? "").localeCompare(b.business_name ?? "");
+        });
+        break;
+    }
+    return sorted;
+  }, [vendors, country, cat, serviceQuery, language, credential, sortBy, userCity]);
 
   const languageOptions = useMemo(() => {
     const set = new Set<string>();
@@ -155,7 +205,13 @@ function EveVendors() {
     return Array.from(set).sort();
   }, [vendors]);
 
-  const hasActiveFilters = !!(serviceQuery || language || credential || cat !== "All");
+  const hasActiveFilters = !!(
+    serviceQuery ||
+    language ||
+    credential ||
+    cat !== "All" ||
+    sortBy !== "recommended"
+  );
 
   const featured = useMemo(() => vendors.filter((v) => v.is_featured), [vendors]);
 
@@ -249,7 +305,9 @@ function EveVendors() {
           >
             <option value="">All languages</option>
             {languageOptions.map((l) => (
-              <option key={l} value={l}>{l}</option>
+              <option key={l} value={l}>
+                {l}
+              </option>
             ))}
           </select>
           <select
@@ -259,8 +317,23 @@ function EveVendors() {
           >
             <option value="">All credentials</option>
             {credentialOptions.map((c) => (
-              <option key={c} value={c}>{c}</option>
+              <option key={c} value={c}>
+                {c}
+              </option>
             ))}
+          </select>
+        </div>
+        <div className="flex items-center gap-2 rounded-full border border-eve-muted/30 bg-white px-3 py-2">
+          <ArrowUpDown className="h-3.5 w-3.5 text-eve-muted" />
+          <select
+            value={sortBy}
+            onChange={(e) => setSortBy(e.target.value as typeof sortBy)}
+            className="flex-1 bg-transparent font-sans text-xs text-eve-forest outline-none"
+          >
+            <option value="recommended">Recommended</option>
+            <option value="nearest">Nearest</option>
+            <option value="newest">Newest</option>
+            <option value="highest_rated">Highest rated</option>
           </select>
         </div>
         {hasActiveFilters && (
@@ -270,6 +343,7 @@ function EveVendors() {
               setLanguage("");
               setCredential("");
               setCat("All");
+              setSortBy("recommended");
             }}
             className="self-end font-sans text-[11px] text-eve-teal"
           >
@@ -278,8 +352,6 @@ function EveVendors() {
         )}
       </div>
 
-
-
       {/* List */}
       <section className="mt-4 flex flex-col gap-3">
         {loading ? (
@@ -287,7 +359,9 @@ function EveVendors() {
         ) : filtered.length === 0 ? (
           <EveCard className="text-center">
             <Store className="mx-auto h-6 w-6 text-eve-teal" />
-            <p className="mt-2 font-sans text-sm text-eve-muted">No vendors yet in this category.</p>
+            <p className="mt-2 font-sans text-sm text-eve-muted">
+              No vendors yet in this category.
+            </p>
           </EveCard>
         ) : (
           filtered.map((v) => (
