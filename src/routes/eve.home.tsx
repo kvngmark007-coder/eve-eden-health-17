@@ -75,6 +75,7 @@ const QA_DEFS: Record<QAKey, {
   icon: React.ReactNode;
   en: { label: string; sub: string };
   fr: { label: string; sub: string };
+  ar: { label: string; sub: string };
   onClick?: () => void;
 }> = {
   find_care: {
@@ -82,32 +83,38 @@ const QA_DEFS: Record<QAKey, {
     icon: <Stethoscope className="h-[18px] w-[18px] text-eve-teal" />,
     en: { label: "Find Care", sub: "Doctors, midwives, IVF, pediatrics" },
     fr: { label: "Trouver des soins", sub: "Médecins, sages-femmes, FIV, pédiatrie" },
+    ar: { label: "ابحث عن رعاية", sub: "أطباء، قابلات، تلقيح صناعي، أطفال" },
   },
   care_support: {
     to: "/eve/care-support",
     icon: <FlaskConical className="h-[18px] w-[18px] text-eve-teal" />,
     en: { label: "Care Support", sub: "Labs, prescriptions & payment" },
     fr: { label: "Support de soins", sub: "Analyses, ordonnances & paiement" },
+    ar: { label: "دعم الرعاية", sub: "تحاليل، أدوية ودفع" },
   },
   care_plan: {
     to: "/eve/match/results",
     icon: <ClipboardList className="h-[18px] w-[18px] text-eve-forest" />,
     en: { label: "My Care Plan", sub: "Next steps and appointments" },
     fr: { label: "Mon plan de soins", sub: "Prochaines étapes et rendez-vous" },
+    ar: { label: "خطة رعايتي", sub: "الخطوات التالية والمواعيد" },
   },
   shops: {
     to: "/eve/vendors",
     icon: <ShoppingBag className="h-[18px] w-[18px] text-eve-terra" />,
     en: { label: "Shops & Services", sub: "Essentials, wellness, partners" },
     fr: { label: "Boutiques & services", sub: "Essentiels, bien-être, partenaires" },
+    ar: { label: "المتاجر والخدمات", sub: "أساسيات، عافية، شركاء" },
   },
   community: {
     to: "/eve/community",
     icon: <Users className="h-[18px] w-[18px] text-eve-rose" />,
     en: { label: "Community & Support", sub: "Navigator, family, women near you" },
     fr: { label: "Communauté & soutien", sub: "Navigatrice, famille, femmes près de vous" },
+    ar: { label: "المجتمع والدعم", sub: "المرشدة، العائلة، نساء قربك" },
   },
 };
+
 
 const DEFAULT_ORDER: QAKey[] = ["find_care", "care_support", "care_plan", "shops", "community"];
 
