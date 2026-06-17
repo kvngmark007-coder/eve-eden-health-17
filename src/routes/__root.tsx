@@ -126,6 +126,8 @@ function RootShell({ children }: { children: React.ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  // Hydrate language + RTL direction app-wide on first paint
+  useLanguage();
 
   useEffect(() => {
     initPwaInstall();
@@ -140,3 +142,4 @@ function RootComponent() {
     </QueryClientProvider>
   );
 }
+
